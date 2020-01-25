@@ -61,6 +61,20 @@ PNG grayscale(PNG image) {
  * @return The image with a spotlight.
  */
 PNG createSpotlight(PNG image, int centerX, int centerY) {
+  for (unsigned x = 0; x < image.width(); x++) {
+    for (unsigned y = 0; y < image.height(); y++) {
+      HSLAPixel & pixel = image.getPixel(x, y);
+
+      double radius = sqrt((centerX-x)*(centerX-x) + (centerY-y)*(centerY-y));
+      if (radius >= 160){
+        pixel.l = 0.2 * pixel.l;
+      }else{
+      pixel.l = (1-0.005*radius)*pixel.l;
+    }
+
+    }
+  }
+
 
   return image;
 
@@ -82,9 +96,6 @@ PNG illinify(PNG image) {
     for (unsigned y = 0; y < image.height(); y++) {
       HSLAPixel & pixel = image.getPixel(x, y);
 
-      // `pixel` is a pointer to the memory stored inside of the PNG `image`,
-      // which means you're changing the image directly.  No need to `set`
-      // the pixel since you're directly changing the memory of the image.
       if (pixel.h > 138.5 && pixel.h < 293.5){
         pixel.h = 216;
       }
