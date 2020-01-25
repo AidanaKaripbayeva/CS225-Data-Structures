@@ -123,6 +123,35 @@ PNG illinify(PNG image) {
 * @return The watermarked image.
 */
 PNG watermark(PNG firstImage, PNG secondImage) {
+  double w, h;
+  if (secondImage.width() > firstImage.width()){
+    w = firstImage.width();
+  }else{
+    w = secondImage.width();
+  }
+  if (secondImage.height() > firstImage.height()){
+    h = firstImage.height();
+  }else{
+    h = secondImage.height();
+  }
+
+  for (unsigned x = 0; x < w; x++) {
+    for (unsigned y = 0; y < h; y++) {
+      HSLAPixel & secondPixel = secondImage.getPixel(x, y);
+      if (secondPixel.l == 1){
+        HSLAPixel & firstPixel = firstImage.getPixel(x, y);
+        if (firstPixel.l <= 0.8){
+          firstPixel.l = 0.2+firstPixel.l;
+
+        }else{
+          firstPixel.l = 1;
+        }
+
+      }
+
+
+    }
+  }
 
   return firstImage;
 }
