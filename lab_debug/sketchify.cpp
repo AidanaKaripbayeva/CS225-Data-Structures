@@ -30,8 +30,8 @@ PNG* setupOutput(unsigned w, unsigned h) {
  * @return a pointer to the color to use when sketchifying
  */
 HSLAPixel* myFavoriteColor() {
-    HSLAPixel p(184, 1, 0.5);
-    return &p;
+    HSLAPixel* p = new HSLAPixel(184, 1, 0.5);
+    return p;
 }
 
 void sketchify(std::string inputFile, std::string outputFile) {
