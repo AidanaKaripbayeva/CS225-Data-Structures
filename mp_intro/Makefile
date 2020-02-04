@@ -34,7 +34,7 @@ main.o : main.cpp intro.h cs225/PNG.h cs225/HSLAPixel.h
 	$(CXX) $(CXXFLAGS) main.cpp
 
 intro.o : intro.cpp intro.h
-	$(CXX) $(CXXFLAGS) intro.cpp -o intro
+	$(CXX) $(CXXFLAGS) intro.cpp
 
 PNG.o : cs225/PNG.cpp cs225/PNG.h cs225/HSLAPixel.h cs225/lodepng/lodepng.h
 	$(CXX) $(CXXFLAGS) cs225/PNG.cpp
@@ -51,7 +51,6 @@ test: output_msg tests.o PNG.o HSLAPixel.o lodepng.o intro.o
 tests.o: tests/tests.cpp tests/catch.hpp cs225/PNG.h cs225/HSLAPixel.h
 	$(CXX) $(CXXFLAGS) tests/tests.cpp
 
-.PHONY: output_msg
 
 clean :
 	-rm -f *.o $(EXENAME) test

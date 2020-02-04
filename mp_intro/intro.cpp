@@ -14,11 +14,11 @@ void rotate(std::string inputFile, std::string outputFile) {
   // Create out.png
   PNG* output = new PNG(width, height);
 
-  for (unsigned x = 0; x < width; x++) {
-    for (unsigned y = 0; y < height; y++) {
+  for (unsigned x = 0; x < original->width(); x++) {
+    for (unsigned y = 0; y < original->height(); y++) {
       HSLAPixel & orig_pixel = original->getPixel(x, y);
 
-      output->getPixel(width-x, height-y) = orig_pixel;
+      output->getPixel(width-x-1, height-y-1) = orig_pixel;
     }
   }
 
@@ -36,25 +36,30 @@ void rotate(std::string inputFile, std::string outputFile) {
 
 cs225::PNG myArt(unsigned int width, unsigned int height) {
   PNG *png = new PNG(width, height);
+
   double hue = 280;
   double lum = 0.5;
   double sat = 1;
 
-  std::cout << "hue = " << hue <<  std::endl;
 
-  unsigned int  diff_w = width/3;
-  unsigned int diff_h = height/3;
 
-  double increment = 26.67/diff_h;
+  double diff_h = height/3;
+
+
+
+  double increment = 80/diff_h;
+
 
   for (unsigned x = 0; x < width; x++) {
     for (unsigned y = 0; y < height; y++) {
       HSLAPixel & pixel = png->getPixel(x, y);
-      std::cout << "hue = " << pixel.h <<  std::endl;
 
-      pixel.h = hue + increment;
-      pixel.l = lum;
+      pixel.h = hue;
       pixel.s = sat;
+      pixel.l = lum;
+
+
+    hue = hue + increment;
 
 
 
