@@ -35,7 +35,7 @@ void rotate(std::string inputFile, std::string outputFile) {
 }
 
 cs225::PNG myArt(unsigned int width, unsigned int height) {
-  PNG *png = new PNG(width, height);
+  PNG png(width, height);
 
   double hue = 280;
   double lum = 0.5;
@@ -52,7 +52,7 @@ cs225::PNG myArt(unsigned int width, unsigned int height) {
 
   for (unsigned x = 0; x < width; x++) {
     for (unsigned y = 0; y < height; y++) {
-      HSLAPixel & pixel = png->getPixel(x, y);
+      HSLAPixel & pixel = png.getPixel(x, y);
 
       pixel.h = hue;
       pixel.s = sat;
@@ -69,5 +69,5 @@ cs225::PNG myArt(unsigned int width, unsigned int height) {
 
   // TODO: Part 3
 
-  return *png;
+  return png;
 }
