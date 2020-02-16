@@ -6,6 +6,9 @@
 #pragma once
 
 #include "shape.h"
+#include "circle.h"
+#include "rectangle.h"
+#include "triangle.h"
 
 /**
  * A subclass of Drawable that can draw a flower
@@ -13,9 +16,9 @@
 class Flower : public Drawable
 {
   private:
-    Shape stem;
-    Shape pistil; // center piece of flower
-    Shape leaf;
+    Rectangle* stem;
+    Circle* pistil; // center piece of flower
+    Triangle* leaf;
 
     void drawPetals(cs225::PNG* canvas, const Vector2& center, int x, int y) const;
 

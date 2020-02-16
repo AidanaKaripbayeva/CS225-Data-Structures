@@ -5,6 +5,8 @@
 
 #include "truck.h"
 #include "color.h"
+#include "line.h"
+
 
 using cs225::PNG;
 using cs225::HSLAPixel;
@@ -113,6 +115,23 @@ void Truck::set_center(const Vector2& pcenter)
     engine->set_center(engine->center() + delta);
 }
 
+void Truck::draw(PNG* canvas) const{
+
+
+  trailer->draw(canvas);
+  cabin->draw(canvas);
+  window->draw(canvas);
+  engine->draw(canvas);
+  for (int i = 0; i < NUM_WHEELS; i++){
+    wheels[i]->draw(canvas);
+  }
+
+
+
+
+}
+
+
 void Truck::copy(const Truck& other)
 {
     center_ = other.center_;
@@ -138,4 +157,3 @@ void Truck::clear()
     delete window;
     delete engine;
 }
-

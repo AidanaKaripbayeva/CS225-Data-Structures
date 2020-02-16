@@ -13,7 +13,7 @@
 class Drawable
 {
   public:
-    ~Drawable()
+    virtual ~Drawable()
     { /* Nothing */
     }
 
@@ -24,4 +24,3 @@ class Drawable
      */
     virtual void draw(cs225::PNG* canvas) const = 0;
 };
-
