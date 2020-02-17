@@ -186,7 +186,8 @@ void Image::scale(double factor){
 void Image::scale(unsigned w, unsigned h){
   int width = this->width();
   int height = this->height();
-  this->resize(w, h);
+  double factor1  = w/width;
+  scale(factor1);
 
 
 }
