@@ -161,10 +161,40 @@ void Image::illinify(){
 
 }
 
-void scale(double factor){
+void Image::scale(double factor){
+  int width = this->width();
+  int height = this->height();
+  //this->resize(width*factor, height*factor);
+  cs225::PNG Current(*this);
+  HSLAPixel * newImageData = new HSLAPixel[width*factor*factor*height];
+
+  for (int x = 0; x < width*factor; x++) {
+    for (int y = 0; y < height*factor; y++) {
+      if (x < width && y < height) {
+        HSLAPixel & oldPixel = this->getPixel(x, y);
+        HSLAPixel & newPixel = newImageData[(x + (y * width*factor))];
+        newPixel = oldPixel;
+      }
+      newImageData[x, y] = Current[x/factor, y/factor];
+    }
+  }
+
+  // Clear the existing image
+  delete[] Current;
+
+  // Update the image to reflect the new image size and data
+  width = factor * width;
+  height = factor * height;
+  Current = newImageData;
 
 
 
 
 }
-void scale(unsigned w, unsigned h);
+void Image::scale(unsigned w, unsigned h){
+  int width = this->width();
+  int height = this->height();
+  this->resize(w, h);
+
+
+}

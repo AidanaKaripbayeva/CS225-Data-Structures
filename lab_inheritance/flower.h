@@ -16,9 +16,9 @@
 class Flower : public Drawable
 {
   private:
-    Rectangle* stem;
-    Circle* pistil; // center piece of flower
-    Triangle* leaf;
+    Shape* stem;
+    Shape* pistil; // center piece of flower
+    Shape* leaf;
 
     void drawPetals(cs225::PNG* canvas, const Vector2& center, int x, int y) const;
 
