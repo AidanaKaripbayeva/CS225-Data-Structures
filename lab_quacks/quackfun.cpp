@@ -4,6 +4,8 @@
  * stacks and queues portion of the lab.
  */
 
+
+#include <iostream>
 namespace QuackFun {
 
 /**
@@ -69,7 +71,35 @@ bool isBalanced(queue<char> input)
 {
 
     // @TODO: Make less optimistic
+    stack<char> st;
+    char temp;
+    unsigned size = input.size();
+    if(input.size() == 0){return true;}
+
+    for (unsigned i = 0; i < size; i ++){
+      char one = input.front();
+      if (one == '['){
+        st.push(one);
+      }
+      if (one == ']'){
+        if(st.empty()){
+          return false;
+        }else{
+          st.pop();
+        }
+
+      }
+      input.pop();
+      input.push(one);
+    }
+    if(st.size() != 0){
+      return false;
+    }
     return true;
+
+
+
+
 }
 
 /**
@@ -91,8 +121,47 @@ template <typename T>
 void scramble(queue<T>& q)
 {
     stack<T> s;
-    // optional: queue<T> q2;
+    //queue<T> q2;
+
 
     // Your code here
+    int size = q.size() - 1;
+    int num = 2;
+    T fr = q.front();
+    q.pop();
+    q.push(fr);
+    while (size != 0){
+      if (num%2 == 0){
+          if(num > size){
+            num = size;
+          }
+          for (int j = 1; j <= num; j ++){
+            T temp1 = q.front();
+            s.push(temp1);
+            q.pop();
+          }
+          int size_s = s.size();
+          for (int k = 1; k <= size_s; k ++){
+            T temp2 = s.top();
+            q.push(temp2);
+            s.pop();
+            size--;
+        }
+      }else{
+          if (num > size){num = size;}
+          for (int m = 1; m <= num; m ++){
+            T temp = q.front();
+            q.pop();
+            q.push(temp);
+            size--;
+
+          }
+
+      }
+      num = num + 1;
+
+    }
+
+
 }
 }
