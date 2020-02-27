@@ -2,12 +2,18 @@
  * @file list.cpp
  * Doubly Linked List (MP 3).
  */
+#include<iostream>
+using namespace std;
+
+
 
 template <class T>
-List<T>::List() { 
+List<T>::List() {
   // @TODO: graded in MP3.1
-    ListNode* head_ = NULL;
-    ListNode* tail_ = NULL;
+  head_ = NULL;
+  tail_ = NULL;
+  length_ = 0;
+
 }
 
 /**
@@ -17,7 +23,7 @@ List<T>::List() {
 template <typename T>
 typename List<T>::ListIterator List<T>::begin() const {
   // @TODO: graded in MP3.1
-  return List<T>::ListIterator(NULL);
+  return List<T>::ListIterator(head_);
 }
 
 /**
@@ -37,6 +43,16 @@ typename List<T>::ListIterator List<T>::end() const {
 template <typename T>
 void List<T>::_destroy() {
   /// @todo Graded in MP3.1
+  ListNode *curr = head_;
+  ListNode *curr_next;
+  while(curr != NULL){
+    curr_next = curr->next;
+    delete curr;
+    curr = curr_next;
+  }
+
+
+
 }
 
 /**
@@ -51,14 +67,15 @@ void List<T>::insertFront(T const & ndata) {
   ListNode * newNode = new ListNode(ndata);
   newNode -> next = head_;
   newNode -> prev = NULL;
-  
+
   if (head_ != NULL) {
     head_ -> prev = newNode;
   }
   if (tail_ == NULL) {
     tail_ = newNode;
   }
-  
+
+  head_ = newNode;
 
   length_++;
 
@@ -73,6 +90,20 @@ void List<T>::insertFront(T const & ndata) {
 template <typename T>
 void List<T>::insertBack(const T & ndata) {
   /// @todo Graded in MP3.1
+  ListNode * newNode = new ListNode(ndata);
+  newNode->prev = tail_;
+  newNode->next = NULL;
+
+  if (tail_ != NULL){
+    tail_->next = newNode;
+  }
+  if (tail_ == NULL){
+    head_ = newNode;
+
+  }
+  tail_ = newNode;
+  length_ ++;
+
 }
 
 /**
@@ -93,34 +124,94 @@ void List<T>::insertBack(const T & ndata) {
  */
 template <typename T>
 typename List<T>::ListNode * List<T>::split(ListNode * start, int splitPoint) {
-  /// @todo Graded in MP3.1
+  /// @todo Graded in MP3.1m
   ListNode * curr = start;
+  if (curr == NULL){
+    return NULL;
+  }
+  if (splitPoint >= length_){
+    return NULL;
+  }
 
-  for (int i = 0; i < splitPoint || curr != NULL; i++) {
+  for (int i = 0; i < splitPoint && curr != NULL; i++) {
     curr = curr->next;
   }
 
   if (curr != NULL) {
       curr->prev->next = NULL;
+      tail_ = curr->prev;
       curr->prev = NULL;
   }
 
-  return NULL;
+  return curr;
 }
 
 /**
   * Modifies List using the rules for a TripleRotate.
   *
-  * This function will to a wrapped rotation to the left on every three 
-  * elements in the list starting for the first three elements. If the 
-  * end of the list has a set of 1 or 2 elements, no rotation all be done 
+  * This function will to a wrapped rotation to the left on every three
+  * elements in the list starting for the first three elements. If the
+  * end of the list has a set of 1 or 2 elements, no rotation all be done
   * on the last 1 or 2 elements.
-  * 
+  *
   * You may NOT allocate ANY new ListNodes!
   */
 template <typename T>
 void List<T>::tripleRotate() {
   // @todo Graded in MP3.1
+  bool last = false;
+  if (length_ < 3){
+    return;
+  }
+  ListNode * temp = head_;
+  head_ = head_->next;
+
+
+  for (int j = 0; j < int(length_/3); j++ ){
+      T d = temp->data;
+
+      if (j == 0){
+        for (int i = 0; i < 3 && temp != NULL; i++){
+          temp = temp->next;
+
+        }
+      }
+      else{
+        ListNode * del = temp->next;
+        temp->prev->next = temp->next;
+        temp->next->prev = temp->prev;
+        delete(temp);
+        temp = del;
+
+        for (int i = 0; i < 3 && temp != NULL; i++){
+        if (temp->next != NULL){
+          temp = temp->next;
+       }else{
+         last = true;
+       }
+      }
+
+
+    }
+    if (!last){
+      ListNode * ins = new ListNode(d);
+      ins->next = temp;
+      ins->prev = temp->prev;
+      temp->prev->next = ins;
+      temp->prev = ins;
+
+    }else {
+      ListNode * ins = new ListNode(d);
+      ins->prev = temp;
+      ins->next = temp->next;
+      temp->next = ins;
+
+
+    }
+
+
+}
+
 }
 
 /**

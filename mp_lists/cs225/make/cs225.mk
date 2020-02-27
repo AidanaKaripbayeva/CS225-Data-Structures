@@ -27,10 +27,10 @@ DEPFILE_FLAGS = -MMD -MP
 WARNINGS = -pedantic -Wall -Werror -Wfatal-errors -Wextra -Wno-unused-parameter -Wno-unused-variable -Wno-unused-function
 
 # Flags for compile:
-CXXFLAGS += $(CS225) -std=c++1y -stdlib=libc++ -O0 $(WARNINGS) $(DEPFILE_FLAGS) -g -c
+CXXFLAGS += $(CS225) -std=c++11 -stdlib=libc++ -O0 $(WARNINGS) $(DEPFILE_FLAGS) -g -c
 
 # Flags for linking:
-LDFLAGS += $(CS225) -std=c++1y -stdlib=libc++ -lc++abi
+LDFLAGS += $(CS225) -std=c++11 -stdlib=libc++ -lc++abi
 
 # Rule for `all` (first/default rule):
 all: $(EXE)
